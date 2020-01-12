@@ -49,6 +49,12 @@
     <Reference Include="Reflection_oM">
       <HintPath>..\..\BHoM\Build\Reflection_oM.dll</HintPath>
     </Reference>
+    <Reference Include="SolarAnalysis_oM">
+      <HintPath>..\SolarAnalysis_oM\bin\Debug\SolarAnalysis_oM.dll</HintPath>
+    </Reference>
+    <Reference Include="SPA">
+      <HintPath>..\..\..\arm\SA\SPA\bin\Debug\SPA.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -59,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compute\SolarPosition.cs" />
     <Compile Include="Compute\MounthPaths.cs" />
     <Compile Include="Compute\DailyPath.cs" />
     <Compile Include="Compute\SunVector.cs" />

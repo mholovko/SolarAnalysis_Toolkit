@@ -32,7 +32,9 @@ using BH.oM.Reflection.Attributes;
 using System.ComponentModel;
 
 using BH.oM.Environment.Climate;
+using Sun = BH.oM.SolarAnalysis.Sun;
 using BH.Engine.Environment;
+using Convert = System.Convert;
 
 namespace BH.Engine.SolarAnalysis
 {
@@ -41,7 +43,7 @@ namespace BH.Engine.SolarAnalysis
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-        [Description("DailyPath")]
+        /*[Description("DailyPath")]
         [Input("sun", "Sun position")]
         [Output("SolarVector", "The sun vector calculated position")]
         public static Circle DailyPath(this SpaceTime spaceTime)
@@ -57,6 +59,7 @@ namespace BH.Engine.SolarAnalysis
                 spaceTime.Hour = h;
                 spaceTime.Minute = m;
                 Sun sun = spaceTime.SolarPosition();
+
                 Point sunPosition = Geometry.Create.Point(sun.SolarVector());
                 sunPositions.Add(sunPosition);
                 if (sunPosition.Z > 0)
@@ -72,6 +75,40 @@ namespace BH.Engine.SolarAnalysis
             Circle circlea = new Circle();
             return circlea;
 
+        }
+        */
+        public static Arc DailyPath(this SpaceTime spaceTime)
+        {
+            Sun sun = spaceTime.SolarPosition();
+            double midday = (sun.Sunset - sun.Sunrise)/ 2 + sun.Sunrise;
+            double[] hours = { sun.Sunset, midday, sun.Sunrise };
+
+            List<Point> sunPositions = new List<Point>();
+            bool validCircle = false;
+
+            foreach (double hour in hours)
+            {
+                TimeSpan time = TimeSpan.FromHours(hour);
+                spaceTime.Hour = time.Hours;
+                spaceTime.Minute = time.Minutes;
+                spaceTime.Second = time.Seconds;
+                spaceTime.Millisecond = time.Milliseconds;
+
+                Sun ssun = spaceTime.SolarPosition();
+
+                Point sunPosition = Geometry.Create.Point(ssun.SolarVector());
+                sunPositions.Add(sunPosition);
+                if (sunPosition.Z > 0)
+                    validCircle = true;
+            }
+
+            if (validCircle)
+            {
+                Arc arc = Geometry.Create.Arc(sunPositions[0], sunPositions[1], sunPositions[2]);
+                return arc;
+            }
+            Arc arcc = new Arc();
+            return arcc;
 
         }
 

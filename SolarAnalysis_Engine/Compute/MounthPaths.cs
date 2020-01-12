@@ -44,9 +44,9 @@ namespace BH.Engine.SolarAnalysis
         [Description("DailyPath")]
         [Input("sun", "Sun position")]
         [Output("SolarVector", "The sun vector calculated position")]
-        public static List<Circle> MounthPaths(this Location location)
+        public static List<Arc> MounthPaths(this Location location)
         {
-            List<Circle> paths = new List<Circle>();
+            List<Arc> paths = new List<Arc>();
             for (int m = 1; m <= 12; ++m)
             {
                 SpaceTime spaceTime = new SpaceTime
@@ -56,12 +56,26 @@ namespace BH.Engine.SolarAnalysis
                     Year = 2020,
                     Month = m,
                 };
-                Circle path = DailyPath(spaceTime);
+                Arc path = DailyPath(spaceTime);
                 paths.Add(path);
             }
             return paths;
-
-            /***************************************************/
         }
+        public static List<Arc> MounthPaths(this SpaceTime spaceTime)
+        {
+            List<Arc> paths = new List<Arc>();
+            for (int m = 1; m <= 12; ++m)
+            {
+                spaceTime.Day = 21;
+                spaceTime.Month = m;
+                Arc path = DailyPath(spaceTime);
+                paths.Add(path);
+            }
+            return paths;
+        }
+
+        /***************************************************/
     }
+
+
 }

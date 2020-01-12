@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Elements\Sun.cs" />
     <Compile Include="Elements\InsolationPanel.cs" />
     <Compile Include="Elements\SolarVector - Copy.cs" />
     <Compile Include="SunPath\MounthCurve.cs" />

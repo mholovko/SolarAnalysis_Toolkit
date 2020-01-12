@@ -24,16 +24,12 @@ using System.Collections.Generic;
 
 using System.Linq;
 using BH.oM.Environment;
-
-using BH.Engine.Geometry;
-using BH.oM.Geometry;
-
 using BH.oM.Reflection.Attributes;
 using System.ComponentModel;
-using Sun = BH.oM.SolarAnalysis.Sun;
-
+using BH.oM.SolarAnalysis;
 using BH.oM.Environment.Climate;
-using Convert = BH.Engine.Environment.Convert;
+using SPA = SPACalculator.SPACalculator;
+using Sun = BH.oM.SolarAnalysis.Sun;
 
 namespace BH.Engine.SolarAnalysis
 {
@@ -42,26 +38,37 @@ namespace BH.Engine.SolarAnalysis
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-        [Description("Calculate the solar vector")]
-        [Input("sun", "Sun position")]
-        [Output("SolarVector", "The sun vector calculated position")]
-        public static Vector SolarVector(this Sun sun)
+        [Description("Calculate the solar azimuth (degrees clockwise from 0 at North) from Datetime and Location objects")]
+        [Input("spaceTime", "The latitude of the location to calculate the solar azimuth from. This should be given in degrees. Default 0")]
+        [Output("sun", "The sun with calculated position")]
+        public static Sun SolarPosition(this SpaceTime spaceTime)
+            
         {
-            double azimuth = Convert.ToRadians(sun.Azimuth);
-            double altitude = Convert.ToRadians(sun.Altitude);
-
-            Vector solarVector = new Vector
+            
+            SPA.SPAData spa = new SPA.SPAData
             {
-                X = Math.Sin(azimuth) * Math.Cos(altitude),
-                Y = Math.Cos(altitude) * Math.Cos(azimuth),
-                Z = Math.Sin(altitude)
+                Year = spaceTime.Year,
+                Month = spaceTime.Month,
+                Day = spaceTime.Day,
+                Hour = spaceTime.Hour,
+                Minute = spaceTime.Minute,
+                Second = spaceTime.Second,
+                Timezone = spaceTime.Location.UtcOffset,
+                DeltaUt1 = 0,
+                DeltaT = 67,
+                Longitude = spaceTime.Location.Longitude,
+                Latitude = spaceTime.Location.Latitude,
+                Elevation = spaceTime.Location.Elevation,
+                Pressure = 820,
+                Temperature = 11,
+                Slope = 0,
+                AzmRotation = 0,
+                AtmosRefract = 0.5667,
+                Function = SPA.CalculationMode.SPA_ALL
             };
 
-            return solarVector;
-
-
+            var result = SPA.SPACalculate(ref spa);
+            return new Sun { Altitude = 90 - spa.Zenith, Azimuth = spa.Azimuth, Sunrise = spa.Sunrise,Sunset =spa.Sunset  };
         }
-
-        /***************************************************/
     }
 }
