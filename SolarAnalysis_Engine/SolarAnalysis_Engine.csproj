@@ -59,6 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compute\MounthPaths.cs" />
+    <Compile Include="Compute\DailyPath.cs" />
     <Compile Include="Compute\SunVector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

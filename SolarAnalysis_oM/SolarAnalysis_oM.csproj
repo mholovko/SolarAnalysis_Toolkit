@@ -51,7 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Elements\InsolationPanel.cs" />
-    <Compile Include="Elements\SolarVector.cs" />
+    <Compile Include="Elements\SolarVector - Copy.cs" />
+    <Compile Include="SunPath\MounthCurve.cs" />
     <Compile Include="Elements\ISolarAnalysisObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
