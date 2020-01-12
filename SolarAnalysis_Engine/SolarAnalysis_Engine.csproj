@@ -59,14 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SunVector.cs" />
+    <Compile Include="Compute\SunVector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\BHoM\Build\Reflection_oM.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Compute\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
