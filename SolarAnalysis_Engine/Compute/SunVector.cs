@@ -35,6 +35,7 @@ using Sun = BH.oM.SolarAnalysis.Sun;
 using BH.oM.Environment.Climate;
 using Convert = BH.Engine.Environment.Convert;
 
+
 namespace BH.Engine.SolarAnalysis
 {
     public static partial class Compute

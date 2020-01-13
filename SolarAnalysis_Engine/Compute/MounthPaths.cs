@@ -33,6 +33,10 @@ using System.ComponentModel;
 
 using BH.oM.Environment.Climate;
 using BH.Engine.Environment;
+using Sun = BH.oM.SolarAnalysis.Sun;
+using Curve = Rhino.Geometry.Curve;
+using Point3d = Rhino.Geometry.Point3d;
+using BH.Engine.Rhinoceros;
 
 namespace BH.Engine.SolarAnalysis
 {
@@ -44,6 +48,7 @@ namespace BH.Engine.SolarAnalysis
         [Description("DailyPath")]
         [Input("sun", "Sun position")]
         [Output("SolarVector", "The sun vector calculated position")]
+
         public static List<Arc> MounthPaths(this Location location)
         {
             List<Arc> paths = new List<Arc>();
@@ -72,6 +77,31 @@ namespace BH.Engine.SolarAnalysis
                 paths.Add(path);
             }
             return paths;
+        }
+        public static List<ICurve> HourPath(SpaceTime spaceTime)
+        {
+               List<ICurve> paths = new List<ICurve>();
+
+            for (int h = 0; h <= 23; ++h)
+            {
+            List<Point3d> sunPositions = new List<Point3d>();
+                for (int m = 1; m <= 12; ++m)
+                {
+                    spaceTime.Day = 21;
+                    spaceTime.Month = m;
+                    Sun ss = spaceTime.SolarPosition();
+
+                    Point sunPosition = Geometry.Create.Point(ss.SolarVector());
+                    Point3d sunPosition3d = Rhinoceros.Convert.ToRhino(sunPosition);
+                    sunPositions.Add(sunPosition3d);
+                }
+                Rhino.Geometry.CurveKnotStyle nnotStyle = Rhino.Geometry.CurveKnotStyle.UniformPeriodic;
+                Curve crv = Curve.CreateInterpolatedCurve(sunPositions, 3, nnotStyle);
+                ICurve crvB = Rhinoceros.Convert.ToBHoM(crv);
+                paths.Add(crvB); 
+                }
+            return paths;
+
         }
 
         /***************************************************/
