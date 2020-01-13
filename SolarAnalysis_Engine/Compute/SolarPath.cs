@@ -24,12 +24,19 @@ using System.Collections.Generic;
 
 using System.Linq;
 using BH.oM.Environment;
+
+using BH.Engine.Geometry;
+using BH.oM.Geometry;
+
 using BH.oM.Reflection.Attributes;
 using System.ComponentModel;
-using BH.oM.SolarAnalysis;
+
 using BH.oM.Environment.Climate;
-using SPA = SPACalculator.SPACalculator;
+using BH.Engine.Environment;
 using Sun = BH.oM.SolarAnalysis.Sun;
+using Curve = Rhino.Geometry.Curve;
+using Point3d = Rhino.Geometry.Point3d;
+using BH.Engine.Rhinoceros;
 
 namespace BH.Engine.SolarAnalysis
 {
@@ -38,37 +45,13 @@ namespace BH.Engine.SolarAnalysis
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-        [Description("Calculate the solar azimuth (degrees clockwise from 0 at North) from Datetime and Location objects")]
-        [Input("spaceTime", "The latitude of the location to calculate the solar azimuth from. This should be given in degrees. Default 0")]
-        [Output("sun", "The sun with calculated position")]
-        public static Sun SolarPA(SpaceTime spaceTime)
-            
-        {
-            
-            SPA.SPAData spa = new SPA.SPAData
-            {
-                Year = spaceTime.Year,
-                Month = spaceTime.Month,
-                Day = spaceTime.Day,
-                Hour = spaceTime.Hour,
-                Minute = spaceTime.Minute,
-                Second = spaceTime.Second,
-                Timezone = spaceTime.Location.UtcOffset,
-                DeltaUt1 = 0,
-                DeltaT = 67,
-                Longitude = spaceTime.Location.Longitude,
-                Latitude = spaceTime.Location.Latitude,
-                Elevation = spaceTime.Location.Elevation,
-                Pressure = 820,
-                Temperature = 11,
-                Slope = 0,
-                AzmRotation = 0,
-                AtmosRefract = 0.5667,
-                Function = SPA.CalculationMode.SPA_ALL
-            };
+        [Description("DailyPath")]
+        [Input("sun", "Sun position")]
+        [Output("SolarVector", "The sun vector calculated position")]
 
-            var result = SPA.SPACalculate(ref spa);
-            return new Sun { Altitude = 90 - spa.Zenith, Azimuth = spa.Azimuth, Sunrise = spa.Sunrise,Sunset =spa.Sunset  };
-        }
+
+        /***************************************************/
     }
+
+
 }

@@ -76,13 +76,54 @@ namespace BH.Engine.SolarAnalysis
             return circlea;
 
         }
-        */
-        public static Arc DailyPath(this SpaceTime spaceTime)
+ 
+        public static ICurve DailyPath(SpaceTime spaceTime)
         {
-            Sun sun = spaceTime.SolarPosition();
+
+            List<Point> sunPositions = new List<Point>();
+            bool isCircle = false;
+
+            Sun sun = SolarPA(spaceTime);
+            if (sun.Sunrise < 0)
+            {
+                isCircle = true;
+                sun.Sunrise = 0.1;
+                sun.Sunset = 23.9;
+            }
             double midday = (sun.Sunset - sun.Sunrise)/ 2 + sun.Sunrise;
             double[] hours = { sun.Sunset, midday, sun.Sunrise };
 
+            foreach (double hour in hours)
+            {
+                TimeSpan time = TimeSpan.FromHours(hour);
+                spaceTime.Hour = time.Hours;
+                spaceTime.Minute = time.Minutes;
+                spaceTime.Second = time.Seconds;
+                spaceTime.Millisecond = time.Milliseconds;
+
+                Sun ssun = SolarPA(spaceTime);
+
+                Point sunPosition = Geometry.Create.Point(ssun.SolarVector());
+                sunPositions.Add(sunPosition);
+            }
+
+            if (isCircle)
+            {
+                Circle circle = Geometry.Create.Circle(sunPositions[0], sunPositions[1], sunPositions[2]);
+                return circle;
+            }
+            else
+            {
+                Arc arc = Geometry.Create.Arc(sunPositions[0], sunPositions[1], sunPositions[2]);
+                return arc;
+            }
+
+        }
+
+               */
+        public static ICurve DailyPath(this SpaceTime spaceTime)
+        {
+            double[] hours = { 0, 11.9, 12 };
             List<Point> sunPositions = new List<Point>();
             bool validCircle = false;
 
@@ -93,10 +134,9 @@ namespace BH.Engine.SolarAnalysis
                 spaceTime.Minute = time.Minutes;
                 spaceTime.Second = time.Seconds;
                 spaceTime.Millisecond = time.Milliseconds;
+                Sun sun = SolarPA(spaceTime);
 
-                Sun ssun = spaceTime.SolarPosition();
-
-                Point sunPosition = Geometry.Create.Point(ssun.SolarVector());
+                Point sunPosition = Geometry.Create.Point(sun.SolarVector());
                 sunPositions.Add(sunPosition);
                 if (sunPosition.Z > 0)
                     validCircle = true;
@@ -104,13 +144,16 @@ namespace BH.Engine.SolarAnalysis
 
             if (validCircle)
             {
-                Arc arc = Geometry.Create.Arc(sunPositions[0], sunPositions[1], sunPositions[2]);
-                return arc;
+
+                Circle circle = Geometry.Create.Circle(sunPositions[0], sunPositions[1], sunPositions[2]);
+                return circle;
             }
-            Arc arcc = new Arc();
-            return arcc;
+            Circle circlea = new Circle();
+            return circlea;
 
         }
+
+
 
         /***************************************************/
     }

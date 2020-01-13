@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compute\SolarPath.cs" />
     <Compile Include="Compute\SolarPosition.cs" />
     <Compile Include="Compute\MounthPaths.cs" />
     <Compile Include="Compute\DailyPath.cs" />

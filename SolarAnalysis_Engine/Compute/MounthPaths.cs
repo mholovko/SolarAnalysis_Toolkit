@@ -49,9 +49,9 @@ namespace BH.Engine.SolarAnalysis
         [Input("sun", "Sun position")]
         [Output("SolarVector", "The sun vector calculated position")]
 
-        public static List<Arc> MounthPaths(this Location location)
+        public static List<ICurve> MounthPaths(Location location)
         {
-            List<Arc> paths = new List<Arc>();
+            List<ICurve> paths = new List<ICurve>();
             for (int m = 1; m <= 12; ++m)
             {
                 SpaceTime spaceTime = new SpaceTime
@@ -61,19 +61,19 @@ namespace BH.Engine.SolarAnalysis
                     Year = 2020,
                     Month = m,
                 };
-                Arc path = DailyPath(spaceTime);
+                ICurve path = DailyPath(spaceTime);
                 paths.Add(path);
             }
             return paths;
         }
-        public static List<Arc> MounthPaths(this SpaceTime spaceTime)
+        public static List<ICurve> MounthPaths(SpaceTime spaceTime)
         {
-            List<Arc> paths = new List<Arc>();
+            List<ICurve> paths = new List<ICurve>();
             for (int m = 1; m <= 12; ++m)
             {
                 spaceTime.Day = 21;
                 spaceTime.Month = m;
-                Arc path = DailyPath(spaceTime);
+                ICurve path = DailyPath(spaceTime);
                 paths.Add(path);
             }
             return paths;
@@ -90,7 +90,7 @@ namespace BH.Engine.SolarAnalysis
                     spaceTime.Day = 21;
                     spaceTime.Month = m;
                     spaceTime.Hour = h;
-                    Sun ss = spaceTime.SolarPosition();
+                    Sun ss = SolarPA(spaceTime);
 
                     Point sunPosition = Geometry.Create.Point(ss.SolarVector());
                     Point3d sunPosition3d = Rhinoceros.Convert.ToRhino(sunPosition);
