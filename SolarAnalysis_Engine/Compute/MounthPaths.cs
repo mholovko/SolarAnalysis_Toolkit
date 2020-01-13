@@ -89,12 +89,14 @@ namespace BH.Engine.SolarAnalysis
                 {
                     spaceTime.Day = 21;
                     spaceTime.Month = m;
+                    spaceTime.Hour = h;
                     Sun ss = spaceTime.SolarPosition();
 
                     Point sunPosition = Geometry.Create.Point(ss.SolarVector());
                     Point3d sunPosition3d = Rhinoceros.Convert.ToRhino(sunPosition);
                     sunPositions.Add(sunPosition3d);
                 }
+                sunPositions.Add(sunPositions[0]);
                 Rhino.Geometry.CurveKnotStyle nnotStyle = Rhino.Geometry.CurveKnotStyle.UniformPeriodic;
                 Curve crv = Curve.CreateInterpolatedCurve(sunPositions, 3, nnotStyle);
                 ICurve crvB = Rhinoceros.Convert.ToBHoM(crv);
