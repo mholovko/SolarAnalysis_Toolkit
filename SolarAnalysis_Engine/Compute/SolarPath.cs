@@ -45,7 +45,7 @@ namespace BH.Engine.SolarAnalysis
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-        [Description("DailyPath")]
+        [Description("SolatPath")]
         [Input("sun", "Sun position")]
         [Output("SolarVector", "The sun vector calculated position")]
 

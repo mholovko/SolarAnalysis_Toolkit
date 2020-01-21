@@ -27,17 +27,20 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BH.oM.Base;
+using BH.oM;
+using BH.oM.Geometry;
 
 using BH.oM.Environment.Fragments;
 
-namespace BH.oM.SolarAnalysis
+namespace BH.oM.SolarAnalysis.SunPath
 {
-    public class Sun : BHoMObject, ISolarAnalysisObject
+    public class Compass : BHoMObject, ISolarAnalysisObject
     {
-        public double Azimuth { get; set; } = 0.0;
-        public double Altitude { get; set; } = 0.0;
-        public double Sunrise { get; set; }
-        public double Sunset { get; set; }
-        
+        /***************************************************/
+        /**** Properties                                ****/
+        /***************************************************/
+        public ICurve Curve { get; set; }
+
+        /***************************************************/
     }
 }

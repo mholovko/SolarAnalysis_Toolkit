@@ -31,16 +31,19 @@ using BH.oM;
 using BH.oM.Geometry;
 
 using BH.oM.Environment.Fragments;
+using BH.oM.SolarAnalysis.SunPath;
 
-namespace BH.oM.SolarAnalysis.SunPath
+namespace BH.oM.SolarAnalysis
 {
-    public class MounthCurve : BHoMObject, ISolarAnalysisObject
+    public class SolarPath : BHoMObject, ISolarAnalysisObject
     {
         /***************************************************/
         /**** Properties                                ****/
         /***************************************************/
-        public Arc Vector { get; set; }
-        public bool SunIsVisible { get; set; }
+        public List<HourlyCurve> HourlyCurves { get; set; }
+        public List<DailyCurve> DailyCurves { get; set; }
+        public List<SolarVector> Vectors { get; set; }
+        public IBHoMObject SunPosition { get; set; }
 
         /***************************************************/
     }

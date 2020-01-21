@@ -19,56 +19,50 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
+
 using System;
 using System.Collections.Generic;
-
 using System.Linq;
-using BH.oM.Environment;
+using System.Text;
+using System.Threading.Tasks;
+
+using BH.oM.Environment.Climate;
+using BH.oM.Geometry;
+
 using BH.oM.Reflection.Attributes;
 using System.ComponentModel;
 using BH.oM.SolarAnalysis;
-using BH.oM.Environment.Climate;
-using SPA = SPACalculator.SPACalculator;
-using Sun = BH.oM.SolarAnalysis.Sun;
 
-namespace BH.Engine.SolarAnalysis
+namespace BH.Engine.Environment
+
 {
-    public static partial class Compute
+    public static partial class Create
     {
         /***************************************************/
         /**** Public Methods                            ****/
         /***************************************************/
-        [Description("Calculate the solar azimuth (degrees clockwise from 0 at North) from Datetime and Location objects")]
-        [Input("spaceTime", "The latitude of the location to calculate the solar azimuth from. This should be given in degrees. Default 0")]
-        [Output("sun", "The sun with calculated position")]
-        public static Sun SolarPA(SpaceTime spaceTime)
-            
+
+        [Description("Returns an Environment SpaceTime object")]
+        [Input("location", "An Environment Location object specifying the latitude, longitude and other location specifics of the SpaceTime object, default null")]
+        [Input("year", "The year of the time for the space time object, default 2007")]
+        [Input("month", "The month of the time for the space time object, default 1 (January)")]
+        [Input("day", "The day of the time for the space time object, default 1")]
+        [Input("hour", "The hour of the day for the space time object, default 12")]
+        [Input("minute", "The minute of the hour for the space time object, default 0")]
+        [Input("second", "The second of the minute for the space time object, default 0")]
+        [Input("millisecond", "The millisecond of the second for the space time object, default 0")]
+        [Input("name", "The name of the space time, default empty string")]
+        [Output("spaceTime", "An Environment SpaceTime object - used for defining locations in space and time for climate analysis")]
+        [Deprecated("3.0", "Deprecated in favour of default create components produced by BHoM")]
+        public static AnalysisPeriod AnalysisPeriod(SpaceTime spaceTimeStart, SpaceTime spaceTimeEnd)
         {
-            
-            SPA.SPAData spa = new SPA.SPAData
+            AnalysisPeriod analysisPeriod = new AnalysisPeriod
             {
-                Year = spaceTime.Year,
-                Month = spaceTime.Month,
-                Day = spaceTime.Day,
-                Hour = spaceTime.Hour,
-                Minute = spaceTime.Minute,
-                Second = spaceTime.Second,
-                Timezone = spaceTime.Location.UtcOffset,
-                DeltaUt1 = 0,
-                DeltaT = 67,
-                Longitude = spaceTime.Location.Longitude,
-                Latitude = spaceTime.Location.Latitude,
-                Elevation = spaceTime.Location.Elevation,
-                Pressure = 820,
-                Temperature = 11,
-                Slope = 0,
-                AzmRotation = 0,
-                AtmosRefract = 0.5667,
-                Function = SPA.CalculationMode.SPA_ALL
+                StartTime = spaceTimeStart,
+                EndTime = spaceTimeEnd
             };
 
-            var result = SPA.SPACalculate(ref spa);
-            return new Sun { Altitude = 90 - spa.Zenith, Azimuth = spa.Azimuth, Sunrise = spa.Sunrise,Sunset =spa.Sunset };
+            return analysisPeriod;
         }
     }
 }

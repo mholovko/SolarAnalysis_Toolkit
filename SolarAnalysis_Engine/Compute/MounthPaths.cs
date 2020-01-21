@@ -103,7 +103,6 @@ namespace BH.Engine.SolarAnalysis
                 paths.Add(crvB); 
                 }
             return paths;
-
         }
 
         /***************************************************/

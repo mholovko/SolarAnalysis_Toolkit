@@ -50,10 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Elements\InsolationPanel - Copy.cs" />
+    <Compile Include="Elements\AnalysisPeriod.cs" />
     <Compile Include="Elements\Sun.cs" />
-    <Compile Include="Elements\InsolationPanel.cs" />
-    <Compile Include="Elements\SolarVector - Copy.cs" />
-    <Compile Include="SunPath\MounthCurve.cs" />
+    <Compile Include="Elements\SolarPath.cs" />
+    <Compile Include="Elements\SolarVector.cs" />
+    <Compile Include="SunPath\Compass.cs" />
+    <Compile Include="SunPath\DailyCurve.cs" />
+    <Compile Include="SunPath\HourlyCurve.cs" />
     <Compile Include="Elements\ISolarAnalysisObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

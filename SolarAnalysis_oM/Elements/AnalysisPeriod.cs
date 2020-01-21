@@ -28,16 +28,14 @@ using System.Threading.Tasks;
 
 using BH.oM.Base;
 
-using BH.oM.Environment.Fragments;
+using BH.oM.Environment;
+using BH.oM.Environment.Climate;
 
 namespace BH.oM.SolarAnalysis
 {
-    public class Sun : BHoMObject, ISolarAnalysisObject
+    public class AnalysisPeriod : BHoMObject, ISolarAnalysisObject
     {
-        public double Azimuth { get; set; } = 0.0;
-        public double Altitude { get; set; } = 0.0;
-        public double Sunrise { get; set; }
-        public double Sunset { get; set; }
-        
+        public SpaceTime StartTime { get; set; } 
+        public SpaceTime EndTime { get; set; }
     }
 }
