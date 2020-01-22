@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using BH.oM.Environment.Climate;
 using BH.oM.Geometry;
 
@@ -33,7 +32,7 @@ using BH.oM.Reflection.Attributes;
 using System.ComponentModel;
 using BH.oM.SolarAnalysis;
 
-namespace BH.Engine.Environment
+namespace BH.Engine.SolarAnalysis
 
 {
     public static partial class Create
@@ -42,17 +41,44 @@ namespace BH.Engine.Environment
         /**** Public Methods                            ****/
         /***************************************************/
 
-        [Description("Returns an SolarAnalysis AnalysisPeriod object")]
-        [Input("StartTime", "SpaceTime start of AnalysisPeriod")]
-        [Input("EndTime", "SpaceTime end of AnalysisPeriod")]
-        [Output("analysisPeriod", "Analysis Period")]
-        [Deprecated("3.0", "Deprecated in favour of default create components produced by BHoM")]
         public static AnalysisPeriod AnalysisPeriod(SpaceTime spaceTimeStart, SpaceTime spaceTimeEnd)
         {
+            //DateTime startDateTime = Convert.ToDateTime(spaceTimeStart);
+            //DateTime endDateTime = Convert.ToDateTime(spaceTimeEnd);
+            DateTime startDateTime = new DateTime(spaceTimeStart.Year, spaceTimeStart.Month, spaceTimeStart.Day, spaceTimeStart.Hour, spaceTimeStart.Minute, spaceTimeStart.Second, spaceTimeStart.Millisecond);
+            DateTime endDateTime = new DateTime(spaceTimeEnd.Year, spaceTimeEnd.Month, spaceTimeEnd.Day, spaceTimeEnd.Hour, spaceTimeEnd.Minute, spaceTimeEnd.Second, spaceTimeEnd.Millisecond);
+            PeriodType periodType;
+
+            TimeSpan period = endDateTime - startDateTime;
+
+            if (period.TotalHours < 0)
+            {
+                spaceTimeEnd = spaceTimeStart;
+
+            }
+
+            if (period.TotalHours >= 1)
+            {
+                if (period.TotalHours > 24)
+                {
+                    periodType = PeriodType.Period;
+                }
+                else
+                {
+                    periodType = PeriodType.Day;
+                }
+            }
+            else 
+            {
+                periodType = PeriodType.Point;
+            }
+
+
             AnalysisPeriod analysisPeriod = new AnalysisPeriod
             {
                 StartTime = spaceTimeStart,
-                EndTime = spaceTimeEnd
+                EndTime = spaceTimeEnd,
+                Type = periodType
             };
             return analysisPeriod;
         }

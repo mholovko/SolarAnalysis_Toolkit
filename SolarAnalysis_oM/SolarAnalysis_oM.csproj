@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -55,6 +55,7 @@
     <Compile Include="Elements\Sun.cs" />
     <Compile Include="Elements\SolarPath.cs" />
     <Compile Include="Elements\SolarVector.cs" />
+    <Compile Include="PeriodType.cs" />
     <Compile Include="SunPath\Compass.cs" />
     <Compile Include="SunPath\DailyCurve.cs" />
     <Compile Include="SunPath\HourlyCurve.cs" />
@@ -62,4 +63,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rem copy SolarAnalysisToolkit to BHoM/Assemblies folder
+Copy /Y "$(TargetDir)$(TargetName).dll" "$(AppData)\BHoM\Assemblies\$(TargetName).dll"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

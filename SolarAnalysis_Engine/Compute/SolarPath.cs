@@ -38,20 +38,22 @@ using Curve = Rhino.Geometry.Curve;
 using Point3d = Rhino.Geometry.Point3d;
 using BH.Engine.Rhinoceros;
 
+/*
+
 namespace BH.Engine.SolarAnalysis
 {
     public static partial class Compute
     {
-        /***************************************************/
-        /**** Public Methods                            ****/
-        /***************************************************/
+
         [Description("SolatPath")]
         [Input("sun", "Sun position")]
         [Output("SolarVector", "The sun vector calculated position")]
 
 
-        /***************************************************/
+
     }
 
 
 }
+
+*/

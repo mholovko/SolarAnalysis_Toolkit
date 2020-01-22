@@ -19,52 +19,14 @@
  * You should have received a copy of the GNU Lesser General Public License     
  * along with this code. If not, see <https://www.gnu.org/licenses/lgpl-3.0.html>.      
  */
-using System;
-using System.Collections.Generic;
-
-using System.Linq;
-using BH.oM.Environment;
-
-using BH.Engine.Geometry;
-using BH.oM.Geometry;
-
-using BH.oM.Reflection.Attributes;
-using System.ComponentModel;
-using Sun = BH.oM.SolarAnalysis.Sun;
-
-using BH.oM.Environment.Climate;
-using Convert = BH.Engine.Environment.Convert;
 
 
-namespace BH.Engine.SolarAnalysis
+namespace BH.oM.SolarAnalysis
 {
-    public static partial class Compute
+    public enum PeriodType
     {
-        /***************************************************/
-        /**** Public Methods                            ****/
-        /***************************************************/
-        [Description("Calculate the solar vector")]
-        [Input("sun", "Sun position")]
-        [Output("SolarVector", "The sun vector calculated position")]
-        public static Vector SolarVector(this Sun sun)
-        {
-            double azimuth = Convert.ToRadians(sun.Azimuth);
-            double altitude = Convert.ToRadians(sun.Altitude);
-
-            Vector solarVector = new Vector
-            {
-                X = Math.Sin(azimuth) * Math.Cos(altitude),
-                Y = Math.Cos(altitude) * Math.Cos(azimuth),
-                Z = Math.Sin(altitude)
-            };
-
-            return solarVector;
-
-
-        }
+      Point = 0,
+      Day,
+      Period
     }
-
-        /***************************************************/
-
-
-    }
+}

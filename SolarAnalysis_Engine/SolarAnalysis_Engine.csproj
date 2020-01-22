@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -48,6 +48,9 @@
     </Reference>
     <Reference Include="Graphics_oM">
       <HintPath>..\..\Rhinoceros_Toolkit\Build\Graphics_oM.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenStreetMap_oM">
+      <HintPath>..\..\OpenStreetMap_Toolkit\Build\OpenStreetMap_oM.dll</HintPath>
     </Reference>
     <Reference Include="Reflection_Engine, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -92,4 +95,8 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rem copy SolarAnalysisToolkit to BHoM/Assemblies folder
+Copy /Y "$(TargetDir)$(TargetName).dll" "$(AppData)\BHoM\Assemblies\$(TargetName).dll"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

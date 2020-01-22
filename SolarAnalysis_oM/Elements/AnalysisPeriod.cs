@@ -37,5 +37,6 @@ namespace BH.oM.SolarAnalysis
     {
         public SpaceTime StartTime { get; set; } 
         public SpaceTime EndTime { get; set; }
+        public PeriodType Type { get; set; }
     }
 }
