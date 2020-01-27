@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SolarAnalysis_Engine")]
+[assembly: AssemblyTitle("SolarAnalysis_Adapter")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Buro Happold")]
-[assembly: AssemblyProduct("SolarAnalysis_Engine")]
+[assembly: AssemblyProduct("SolarAnalysis_Adapter")]
 [assembly: AssemblyCopyright("Copyright © Buro Happold 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1e1ec64d-e12b-42eb-82c5-03387bcde851")]
+[assembly: Guid("ec2a98eb-2c47-4abe-a018-00417a6f27de")]
 
 // Version information for an assembly consists of the following four values:
 //
